@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Your Name — Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --teal:        #095859;
+    --teal-dark:   #063d3e;
+    --teal-deep:   #042a2b;
+    --teal-light:  #0d7a7b;
+    --teal-mist:   #e4f2f2;
+    --teal-pale:   #f0f8f8;
+    --gold:        #c9a45a;
+    --gold-light:  #f5e9d0;
+    --off-white:   #f8f5f0;
+    --white:       #ffffff;
+    --ink:         #1a1a18;
+    --ink-mid:     #3d3d3a;
+    --ink-soft:    #6b6b66;
+    --ink-faint:   #a8a8a3;
+    --border:      rgba(9,88,89,0.12);
+  }
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Outfit', sans-serif; background: var(--off-white); color: var(--ink); overflow-x: hidden; }
+  ::-webkit-scrollbar { width: 4px; }
+  ::-webkit-scrollbar-track { background: var(--off-white); }
+  ::-webkit-scrollbar-thumb { background: var(--teal); border-radius: 2px; }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 64px; height: 64px;
+    background: rgba(248,245,240,0.92);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo { font-family: 'Cormorant Garamond', serif; font-size: 20px; font-weight: 600; color: var(--teal); text-decoration: none; }
+  .nav-links { display: flex; gap: 40px; list-style: none; }
+  .nav-links a { font-size: 13px; font-weight: 500; letter-spacing: 0.6px; text-transform: uppercase; color: var(--ink-soft); text-decoration: none; transition: color 0.2s; position: relative; }
+  .nav-links a::after { content: ''; position: absolute; bottom: -3px; left: 0; right: 0; height: 1px; background: var(--teal); transform: scaleX(0); transition: transform 0.25s; }
+  .nav-links a:hover { color: var(--teal); }
+  .nav-links a:hover::after { transform: scaleX(1); }
+  .nav-cta { background: var(--teal) !important; color: var(--white) !important; padding: 8px 20px; border-radius: 100px; }
+  .nav-cta:hover { background: var(--teal-light) !important; }
+  .nav-cta::after { display: none !important; }
+
+  /* HERO */
+  #hero {
+    min-height: 100vh; display: grid; grid-template-columns: 1fr 1fr;
+    align-items: center; background: var(--teal-deep);
+    padding: 100px 64px 64px; position: relative; overflow: hidden;
+  }
+  .hero-orb { position: absolute; border-radius: 50%; pointer-events: none; }
+  .hero-orb-1 { width: 600px; height: 600px; background: radial-gradient(circle, rgba(9,88,89,0.6) 0%, transparent 70%); top: -200px; right: -100px; }
+  .hero-orb-2 { width: 400px; height: 400px; background: radial-gradient(circle, rgba(201,164,90,0.15) 0%, transparent 70%); bottom: -100px; left: 10%; }
+  .hero-line { position: absolute; top: 0; left: 50%; width: 1px; height: 100%; background: linear-gradient(to bottom, transparent, rgba(201,164,90,0.2), transparent); }
+  .hero-content { position: relative; z-index: 1; }
+  .hero-eyebrow { display: inline-flex; align-items: center; gap: 10px; margin-bottom: 28px; font-size: 12px; font-weight: 500; letter-spacing: 2px; text-transform: uppercase; color: var(--gold); }
+  .hero-eyebrow::before { content: ''; display: block; width: 32px; height: 1px; background: var(--gold); }
+  .hero-name { font-family: 'Cormorant Garamond', serif; font-size: clamp(52px, 6vw, 80px); font-weight: 300; line-height: 1.05; color: var(--white); margin-bottom: 8px; }
+  .hero-name em { font-style: italic; color: var(--gold); }
+  .hero-title { font-size: 16px; font-weight: 300; color: rgba(255,255,255,0.55); margin-bottom: 40px; line-height: 1.6; }
+  .hero-title strong { color: rgba(255,255,255,0.85); font-weight: 500; }
+  .hero-ctas { display: flex; gap: 16px; flex-wrap: wrap; }
+  .btn-primary { display: inline-flex; align-items: center; gap: 8px; background: var(--gold); color: var(--teal-deep); padding: 14px 28px; border-radius: 100px; font-size: 14px; font-weight: 600; text-decoration: none; transition: transform 0.2s, box-shadow 0.2s; }
+  .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(201,164,90,0.35); }
+  .btn-outline { display: inline-flex; align-items: center; gap: 8px; border: 1px solid rgba(255,255,255,0.25); color: rgba(255,255,255,0.8); padding: 14px 28px; border-radius: 100px; font-size: 14px; font-weight: 400; text-decoration: none; transition: border-color 0.2s, color 0.2s; }
+  .btn-outline:hover { border-color: rgba(255,255,255,0.6); color: var(--white); }
+  .hero-visual { display: flex; justify-content: center; align-items: center; position: relative; z-index: 1; }
+  .hero-photo-frame { width: 340px; height: 420px; border: 1px solid rgba(201,164,90,0.3); border-radius: 4px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; position: relative; background: rgba(255,255,255,0.03); overflow: hidden; }
+  .hero-photo-frame::before { content: ''; position: absolute; top: 12px; left: 12px; right: 12px; bottom: 12px; border: 1px solid rgba(201,164,90,0.15); border-radius: 2px; pointer-events: none; }
+  .photo-placeholder-icon { width: 72px; height: 72px; border-radius: 50%; background: rgba(201,164,90,0.15); display: flex; align-items: center; justify-content: center; font-size: 28px; }
+  .photo-placeholder-text { font-size: 13px; color: rgba(255,255,255,0.35); text-align: center; line-height: 1.6; }
+  .photo-corner { position: absolute; width: 20px; height: 20px; border-color: var(--gold); border-style: solid; opacity: 0.5; }
+  .photo-corner.tl { top: 6px; left: 6px; border-width: 1px 0 0 1px; }
+  .photo-corner.tr { top: 6px; right: 6px; border-width: 1px 1px 0 0; }
+  .photo-corner.bl { bottom: 6px; left: 6px; border-width: 0 0 1px 1px; }
+  .photo-corner.br { bottom: 6px; right: 6px; border-width: 0 1px 1px 0; }
+
+  /* SHARED */
+  section { padding: 100px 64px; }
+  .section-label { display: inline-flex; align-items: center; gap: 12px; font-size: 11px; font-weight: 600; letter-spacing: 2.5px; text-transform: uppercase; color: var(--teal); margin-bottom: 16px; }
+  .section-label span { display: inline-block; width: 28px; height: 1px; background: var(--teal); }
+  .section-heading { font-family: 'Cormorant Garamond', serif; font-size: clamp(36px, 4vw, 52px); font-weight: 300; line-height: 1.1; color: var(--ink); margin-bottom: 48px; }
+  .section-heading em { font-style: italic; color: var(--teal); }
+
+  /* ABOUT */
+  #about { background: var(--white); }
+  .about-grid { display: grid; grid-template-columns: 1fr 1.6fr; gap: 80px; align-items: start; }
+  .about-photo-block { width: 100%; aspect-ratio: 3/4; background: var(--teal-mist); border-radius: 2px; overflow: hidden; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; position: relative; border: 1px solid var(--border); }
+  .about-photo-block::after { content: ''; position: absolute; bottom: -16px; right: -16px; width: 100%; height: 100%; border: 1px solid var(--border); border-radius: 2px; z-index: -1; }
+  .about-placeholder-icon { font-size: 40px; opacity: 0.4; }
+  .about-placeholder-text { font-size: 13px; color: var(--ink-faint); text-align: center; line-height: 1.6; }
+  .about-paragraph { font-size: 17px; line-height: 1.85; color: var(--ink-mid); font-weight: 300; margin-bottom: 40px; border-left: 2px solid var(--teal); padding-left: 24px; }
+  .about-chips { display: flex; flex-wrap: wrap; gap: 10px; }
+  .chip { padding: 7px 16px; border-radius: 100px; font-size: 13px; font-weight: 500; background: var(--teal-pale); color: var(--teal-dark); border: 1px solid var(--border); }
+
+  /* VIDEO */
+  #video { background: var(--off-white); }
+  .video-layout { display: grid; grid-template-columns: 1.4fr 1fr; gap: 64px; align-items: center; }
+  .video-frame { aspect-ratio: 16/9; background: var(--teal-deep); border-radius: 4px; overflow: hidden; position: relative; cursor: pointer; display: flex; align-items: center; justify-content: center; border: 1px solid rgba(9,88,89,0.2); }
+  .video-overlay { position: absolute; inset: 0; background: linear-gradient(135deg, rgba(4,42,43,0.7) 0%, rgba(9,88,89,0.4) 100%); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; transition: background 0.3s; z-index: 2; }
+  .video-frame:hover .video-overlay { background: rgba(4,42,43,0.5); }
+  .play-btn { width: 64px; height: 64px; border-radius: 50%; background: var(--gold); border: none; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: transform 0.2s, box-shadow 0.2s; }
+  .play-btn:hover { transform: scale(1.08); box-shadow: 0 8px 24px rgba(201,164,90,0.4); }
+  .play-btn svg { margin-left: 3px; }
+  .video-label { font-size: 13px; color: rgba(255,255,255,0.7); }
+  .video-info h3 { font-family: 'Cormorant Garamond', serif; font-size: 28px; font-weight: 400; color: var(--ink); margin-bottom: 16px; line-height: 1.3; }
+  .video-info p { font-size: 15px; line-height: 1.8; color: var(--ink-soft); font-weight: 300; margin-bottom: 20px; }
+  .video-duration { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; color: var(--teal); font-weight: 500; }
+  .video-duration::before { content: ''; display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--teal); }
+  .upload-hint { margin-top: 16px; padding: 12px 16px; background: var(--gold-light); border-radius: 4px; border-left: 3px solid var(--gold); font-size: 13px; color: var(--ink-mid); line-height: 1.6; }
+  .upload-hint strong { color: var(--ink); }
+
+  /* GOALS */
+  #goals { background: var(--teal-deep); }
+  #goals .section-label { color: var(--gold); }
+  #goals .section-label span { background: var(--gold); }
+  #goals .section-heading { color: var(--white); }
+  #goals .section-heading em { color: var(--gold); }
+  .goals-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .goal-card { padding: 36px 32px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); border-radius: 4px; position: relative; overflow: hidden; transition: border-color 0.3s, background 0.3s; }
+  .goal-card:hover { border-color: rgba(201,164,90,0.35); background: rgba(255,255,255,0.07); }
+  .goal-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, var(--gold), transparent); opacity: 0; transition: opacity 0.3s; }
+  .goal-card:hover::before { opacity: 1; }
+  .goal-number { font-family: 'Cormorant Garamond', serif; font-size: 48px; font-weight: 300; color: rgba(201,164,90,0.25); line-height: 1; margin-bottom: 16px; }
+  .goal-title { font-size: 17px; font-weight: 600; color: var(--white); margin-bottom: 12px; }
+  .goal-body { font-size: 14px; line-height: 1.8; color: rgba(255,255,255,0.5); font-weight: 300; }
+  .goal-timeframe { display: inline-block; margin-top: 20px; font-size: 11px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: var(--gold); opacity: 0.8; }
+
+  /* FUN FACTS */
+  #fun { background: var(--white); }
+  .fun-intro { font-size: 16px; color: var(--ink-soft); font-weight: 300; line-height: 1.7; max-width: 600px; margin-bottom: 56px; }
+  .fun-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0; border: 1px solid var(--border); border-radius: 4px; overflow: hidden; }
+  .fun-item { padding: 40px 36px; border-right: 1px solid var(--border); border-bottom: 1px solid var(--border); display: flex; gap: 20px; align-items: flex-start; transition: background 0.2s; }
+  .fun-item:hover { background: var(--teal-pale); }
+  .fun-item:nth-child(2n) { border-right: none; }
+  .fun-item:nth-last-child(-n+2) { border-bottom: none; }
+  .fun-icon { width: 44px; height: 44px; border-radius: 50%; background: var(--teal-mist); display: flex; align-items: center; justify-content: center; font-size: 20px; flex-shrink: 0; }
+  .fun-text h4 { font-size: 16px; font-weight: 600; color: var(--ink); margin-bottom: 6px; }
+  .fun-text p { font-size: 14px; color: var(--ink-soft); line-height: 1.7; font-weight: 300; }
+  .photo-gallery { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 40px; }
+  .photo-slot { aspect-ratio: 4/3; background: var(--teal-mist); border-radius: 2px; border: 1px dashed var(--border); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; transition: background 0.2s, border-color 0.2s; overflow: hidden; }
+  .photo-slot:hover { background: var(--teal-pale); border-color: var(--teal); }
+  .photo-slot span { font-size: 12px; color: var(--ink-faint); }
+  .photo-slot-icon { font-size: 24px; opacity: 0.4; }
+
+  /* RESUME — PDF viewer */
+  #resume { background: var(--off-white); }
+  .resume-layout { display: grid; grid-template-columns: 1fr 300px; gap: 48px; align-items: start; }
+  .resume-pdf-wrapper { background: var(--white); border: 1px solid var(--border); border-radius: 4px; overflow: hidden; box-shadow: 0 4px 24px rgba(9,88,89,0.08); }
+  .resume-pdf-toolbar { display: flex; align-items: center; justify-content: space-between; padding: 12px 20px; background: var(--teal-deep); }
+  .resume-pdf-toolbar span { font-size: 13px; color: rgba(255,255,255,0.55); }
+  .resume-pdf-toolbar a { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 500; color: var(--gold); text-decoration: none; transition: opacity 0.2s; }
+  .resume-pdf-toolbar a:hover { opacity: 0.75; }
+  .resume-pdf-embed { width: 100%; height: 700px; display: block; border: none; background: #f5f5f5; }
+  .resume-aside { display: flex; flex-direction: column; gap: 32px; }
+  .resume-aside-block h3 { font-size: 13px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: var(--teal); margin-bottom: 16px; padding-bottom: 8px; border-bottom: 1px solid var(--border); }
+  .skills-list { display: flex; flex-wrap: wrap; gap: 8px; }
+  .skill-tag { padding: 6px 14px; font-size: 13px; background: var(--white); color: var(--ink-mid); border: 1px solid var(--border); border-radius: 100px; }
+  .education-item .deg { font-size: 15px; font-weight: 600; color: var(--ink); }
+  .education-item .school { font-size: 13px; color: var(--teal); margin: 2px 0; }
+  .education-item .year { font-size: 12px; color: var(--ink-faint); }
+  .resume-download { display: flex; align-items: center; justify-content: center; gap: 10px; padding: 12px 24px; background: var(--teal); color: var(--white); border-radius: 100px; font-size: 14px; font-weight: 500; text-decoration: none; transition: background 0.2s; }
+  .resume-download:hover { background: var(--teal-light); }
+
+  /* CONTACT */
+  #contact { background: var(--teal); text-align: center; padding: 100px 64px; position: relative; overflow: hidden; }
+  .contact-bg-text { position: absolute; bottom: -40px; left: 50%; transform: translateX(-50%); font-family: 'Cormorant Garamond', serif; font-size: 180px; font-weight: 300; color: rgba(255,255,255,0.04); white-space: nowrap; pointer-events: none; user-select: none; }
+  .contact-inner { position: relative; z-index: 1; max-width: 640px; margin: 0 auto; }
+  .contact-eyebrow { font-size: 11px; font-weight: 600; letter-spacing: 2.5px; text-transform: uppercase; color: rgba(255,255,255,0.55); margin-bottom: 16px; }
+  .contact-heading { font-family: 'Cormorant Garamond', serif; font-size: clamp(40px, 5vw, 64px); font-weight: 300; color: var(--white); line-height: 1.1; margin-bottom: 20px; }
+  .contact-heading em { font-style: italic; color: var(--gold); }
+  .contact-sub { font-size: 16px; color: rgba(255,255,255,0.65); font-weight: 300; line-height: 1.7; margin-bottom: 48px; }
+  .contact-actions { display: flex; justify-content: center; gap: 16px; flex-wrap: wrap; }
+  .btn-linkedin { display: inline-flex; align-items: center; gap: 10px; background: #0a66c2; color: var(--white); padding: 14px 28px; border-radius: 100px; font-size: 14px; font-weight: 600; text-decoration: none; transition: transform 0.2s, box-shadow 0.2s; }
+  .btn-linkedin:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(10,102,194,0.45); }
+  .btn-email { display: inline-flex; align-items: center; gap: 10px; background: rgba(255,255,255,0.12); color: var(--white); border: 1px solid rgba(255,255,255,0.25); padding: 14px 28px; border-radius: 100px; font-size: 14px; text-decoration: none; transition: background 0.2s; }
+  .btn-email:hover { background: rgba(255,255,255,0.2); }
+
+  /* FOOTER */
+  footer { background: var(--teal-deep); padding: 32px 64px; display: flex; align-items: center; justify-content: space-between; }
+  footer .logo { font-family: 'Cormorant Garamond', serif; font-size: 18px; color: rgba(255,255,255,0.5); text-decoration: none; }
+  footer .copy { font-size: 12px; color: rgba(255,255,255,0.3); }
+  footer .back-top { font-size: 12px; color: rgba(255,255,255,0.4); text-decoration: none; transition: color 0.2s; }
+  footer .back-top:hover { color: var(--gold); }
+
+  /* ANIMATIONS */
+  .fade-up { opacity: 0; transform: translateY(28px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+  /* RESPONSIVE */
+  @media (max-width: 900px) {
+    nav { padding: 0 24px; }
+    .nav-links { display: none; }
+    #hero { grid-template-columns: 1fr; padding: 100px 24px 64px; }
+    .hero-visual { display: none; }
+    section { padding: 72px 24px; }
+    .about-grid, .video-layout, .resume-layout { grid-template-columns: 1fr; gap: 40px; }
+    .goals-grid { grid-template-columns: 1fr; }
+    .fun-grid { grid-template-columns: 1fr; }
+    .fun-item:nth-child(2n) { border-right: 1px solid var(--border); }
+    .photo-gallery { grid-template-columns: repeat(2, 1fr); }
+    .resume-pdf-embed { height: 500px; }
+    footer { flex-direction: column; gap: 12px; text-align: center; }
+    #contact { padding: 72px 24px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#hero" class="nav-logo">Your Name</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#video">Video</a></li>
+    <li><a href="#goals">Goals</a></li>
+    <li><a href="#fun">Interests</a></li>
+    <li><a href="#resume">Resume</a></li>
+    <li><a href="#contact" class="nav-cta">Connect</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-orb hero-orb-1"></div>
+  <div class="hero-orb hero-orb-2"></div>
+  <div class="hero-line"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">Portfolio</div>
+    <h1 class="hero-name">Your<br><em>Full Name</em></h1>
+    <p class="hero-title">
+      <strong>IT Systems · Sales Engineering</strong><br>
+      University of Texas at Dallas &nbsp;·&nbsp; Expected May 2027
+    </p>
+    <div class="hero-ctas">
+      <a href="#about" class="btn-primary">
+        View My Work
+        <svg width="14" height="14" viewBox="0 0 14 14" fill="none"><path d="M3 7h8M7.5 3.5L11 7l-3.5 3.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </a>
+      <a href="#contact" class="btn-outline">Get In Touch</a>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="hero-photo-frame">
+      <div class="photo-corner tl"></div>
+      <div class="photo-corner tr"></div>
+      <div class="photo-corner bl"></div>
+      <div class="photo-corner br"></div>
+      <!-- Replace with: <img src="your-photo.jpg" style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;"> -->
+      <div class="photo-placeholder-icon">🙂</div>
+      <p class="photo-placeholder-text">Replace with your<br>professional photo</p>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-grid">
+    <div class="about-left fade-up">
+      <div class="about-photo-block">
+        <!-- Replace with: <img src="about-photo.jpg" style="width:100%;height:100%;object-fit:cover;"> -->
+        <div class="about-placeholder-icon">📷</div>
+        <p class="about-placeholder-text">Add your photo here</p>
+      </div>
+    </div>
+    <div class="about-right fade-up">
+      <div class="section-label"><span></span>About Me</div>
+      <h2 class="section-heading">A quick<br><em>introduction</em></h2>
+      <p class="about-paragraph">
+        <!-- FILL IN: Replace this with your one-paragraph About Me. Write in first person, cover who you are, what you study, what drives you, and what makes you stand out. Keep it to 3–5 sentences. -->
+        Write your About Me paragraph here. Share who you are, what you're studying at UT Dallas, your professional interests, and what makes you stand out. Keep it to 3–5 sentences and write it in first person — be genuine and specific.
+      </p>
+      <div class="about-chips">
+        <span class="chip">IT Systems</span>
+        <span class="chip">Sales Engineering</span>
+        <span class="chip">UT Dallas</span>
+        <span class="chip">Add Your Skills</span>
+        <span class="chip">+ More</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VIDEO -->
+<section id="video">
+  <div class="section-label fade-up"><span></span>Video Introduction</div>
+  <h2 class="section-heading fade-up">Hear it from<br><em>me directly</em></h2>
+  <div class="video-layout">
+    <div class="fade-up">
+      <div class="video-frame">
+        <!--
+          TO ADD YOUR VIDEO:
+          Option A — Self-hosted .mp4 (place file in same folder as index.html):
+            <video controls poster="thumbnail.jpg" style="position:absolute;inset:0;width:100%;height:100%;">
+              <source src="your-video.mp4" type="video/mp4">
+            </video>
+
+          Option B — YouTube embed (unlisted video recommended):
+            <iframe width="100%" height="100%" src="https://www.youtube.com/embed/YOUR_VIDEO_ID"
+              frameborder="0" allowfullscreen style="position:absolute;inset:0;"></iframe>
+            Then delete the .video-overlay div below.
+        -->
+        <div class="video-overlay">
+          <button class="play-btn" onclick="alert('Add your video file or YouTube embed — see the HTML comment above for instructions.')">
+            <svg width="22" height="22" viewBox="0 0 22 22" fill="none">
+              <path d="M7 4.5L18 11L7 17.5V4.5Z" fill="#063d3e" stroke="#063d3e" stroke-linejoin="round"/>
+            </svg>
+          </button>
+          <span class="video-label">Click to play</span>
+        </div>
+      </div>
+      <div class="upload-hint">
+        <strong>How to add your video:</strong> Record a ~30 sec self-intro answering "Tell me about yourself." Upload to YouTube (unlisted) and paste the embed URL above, or drop an .mp4 in the same folder as index.html and use the &lt;video&gt; tag. See the HTML comment for exact code.
+      </div>
+    </div>
+    <div class="video-info fade-up">
+      <h3>"Tell me about<br>yourself."</h3>
+      <p>A short self-introduction where I walk through my background, what I'm studying, and what I'm passionate about in the world of technology and sales engineering.</p>
+      <div class="video-duration">~30 seconds</div>
+    </div>
+  </div>
+</section>
+
+<!-- GOALS -->
+<section id="goals">
+  <div class="section-label fade-up"><span></span>Goals</div>
+  <h2 class="section-heading fade-up">Where I'm<br><em>headed</em></h2>
+  <div class="goals-grid">
+    <div class="goal-card fade-up">
+      <div class="goal-number">01</div>
+      <h3 class="goal-title">Short-Term Goal</h3>
+      <p class="goal-body">
+        <!-- FILL IN: What do you want to achieve in the next 1–2 years? e.g., land a Solution Engineering internship, earn a cert, graduate with honors. -->
+        Describe your short-term goal here. Be specific — what do you want to accomplish by graduation or within the next year?
+      </p>
+      <span class="goal-timeframe">2025 – 2026</span>
+    </div>
+    <div class="goal-card fade-up" style="transition-delay:0.1s">
+      <div class="goal-number">02</div>
+      <h3 class="goal-title">Career Goal</h3>
+      <p class="goal-body">
+        <!-- FILL IN: What role/industry do you want to break into after graduation? e.g., Solution Engineer at an enterprise SaaS company. -->
+        Describe your career goal here. What kind of role or company do you see yourself in after graduating?
+      </p>
+      <span class="goal-timeframe">Post-graduation</span>
+    </div>
+    <div class="goal-card fade-up" style="transition-delay:0.2s">
+      <div class="goal-number">03</div>
+      <h3 class="goal-title">Long-Term Vision</h3>
+      <p class="goal-body">
+        <!-- FILL IN: What's your big-picture ambition? e.g., lead a product team, start a company, become a technical sales leader. -->
+        Share your long-term vision here. Where do you want to be in 10 years and what impact do you want to have?
+      </p>
+      <span class="goal-timeframe">Long-term</span>
+    </div>
+  </div>
+</section>
+
+<!-- FUN FACTS -->
+<section id="fun">
+  <div class="section-label fade-up"><span></span>Interests & Hobbies</div>
+  <h2 class="section-heading fade-up">Beyond the<br><em>resume</em></h2>
+  <p class="fun-intro fade-up">A few things that make me, me — outside of academics and work.</p>
+  <div class="fun-grid fade-up">
+    <!-- FILL IN: Replace each item with your own fun facts / professional hobbies -->
+    <div class="fun-item">
+      <div class="fun-icon">🏎️</div>
+      <div class="fun-text">
+        <h4>Formula Racing</h4>
+        <p>Your note about Formula Racing here — e.g., sponsorship acquisition work, your role on the team, and what you've learned from the experience.</p>
+      </div>
+    </div>
+    <div class="fun-item">
+      <div class="fun-icon">📊</div>
+      <div class="fun-text">
+        <h4>Fun Fact #2</h4>
+        <p>Add your second fun fact or hobby here. Keep it professional but personal — recruiters remember the human behind the resume.</p>
+      </div>
+    </div>
+    <div class="fun-item">
+      <div class="fun-icon">💡</div>
+      <div class="fun-text">
+        <h4>Fun Fact #3</h4>
+        <p>Add your third fun fact here. Consider hobbies, travel, volunteer work, or side projects that show your personality.</p>
+      </div>
+    </div>
+    <div class="fun-item">
+      <div class="fun-icon">🎯</div>
+      <div class="fun-text">
+        <h4>Fun Fact #4</h4>
+        <p>Add your fourth fun fact here. Competitions, wins, or achievements outside of class work great in this spot.</p>
+      </div>
+    </div>
+  </div>
+  <div class="photo-gallery fade-up">
+    <div class="photo-slot">
+      <!-- Replace with: <img src="photo1.jpg" style="width:100%;height:100%;object-fit:cover;"> -->
+      <div class="photo-slot-icon">📷</div><span>Add photo</span>
+    </div>
+    <div class="photo-slot">
+      <div class="photo-slot-icon">📷</div><span>Add photo</span>
+    </div>
+    <div class="photo-slot">
+      <div class="photo-slot-icon">📷</div><span>Add photo</span>
+    </div>
+  </div>
+</section>
+
+<!-- RESUME -->
+<section id="resume">
+  <div class="section-label fade-up"><span></span>Resume</div>
+  <h2 class="section-heading fade-up">My full<br><em>resume</em></h2>
+  <div class="resume-layout">
+
+    <!-- PDF VIEWER -->
+    <div class="fade-up">
+      <div class="resume-pdf-wrapper">
+        <div class="resume-pdf-toolbar">
+          <span>resume.pdf</span>
+          <a href="resume.pdf" download>
+            <svg width="13" height="13" viewBox="0 0 16 16" fill="none"><path d="M8 2v8M5 7l3 3 3-3M3 11v1a1 1 0 001 1h8a1 1 0 001-1v-1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            Download
+          </a>
+        </div>
+        <!--
+          HOW TO DISPLAY YOUR RESUME:
+
+          Option A — Local file (recommended for GitHub Pages):
+            1. Export your resume as "resume.pdf"
+            2. Place it in the SAME FOLDER as index.html
+            3. Done — it displays automatically
+
+          Option B — Google Drive:
+            1. Upload PDF to Google Drive → Share → "Anyone with link"
+            2. Copy the link, then change "/view?usp=sharing" to "/preview"
+               Example: https://drive.google.com/file/d/YOUR_FILE_ID/preview
+            3. Replace "resume.pdf" in the iframe src below with that URL
+        -->
+        <iframe
+          class="resume-pdf-embed"
+          src="resume.pdf"
+          title="Resume"
+          loading="lazy"
+        ></iframe>
+      </div>
+      <div class="upload-hint">
+        <strong>To display your resume:</strong> Save it as <code style="background:rgba(0,0,0,0.07);padding:1px 6px;border-radius:3px;font-size:12px;">resume.pdf</code> and place it in the same folder as <code style="background:rgba(0,0,0,0.07);padding:1px 6px;border-radius:3px;font-size:12px;">index.html</code>. Or use a Google Drive preview link — see the HTML comment above for instructions.
+      </div>
+    </div>
+
+    <!-- SIDEBAR -->
+    <div class="resume-aside fade-up">
+      <div class="resume-aside-block">
+        <h3>Education</h3>
+        <div class="education-item">
+          <div class="deg">B.S. Information Technology Systems</div>
+          <div class="school">University of Texas at Dallas</div>
+          <div class="year">Sales Engineering Track · Expected May 2027</div>
+        </div>
+      </div>
+      <div class="resume-aside-block">
+        <h3>Skills</h3>
+        <div class="skills-list">
+          <span class="skill-tag">Sales Development</span>
+          <span class="skill-tag">Oracle SQL</span>
+          <span class="skill-tag">Product Analysis</span>
+          <span class="skill-tag">Presentations</span>
+          <span class="skill-tag">CRM Tools</span>
+          <span class="skill-tag">Add more skills</span>
+        </div>
+      </div>
+      <div class="resume-aside-block">
+        <h3>Download</h3>
+        <a href="resume.pdf" download class="resume-download">
+          <svg width="15" height="15" viewBox="0 0 16 16" fill="none"><path d="M8 2v8M5 7l3 3 3-3M3 11v1a1 1 0 001 1h8a1 1 0 001-1v-1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Download Resume PDF
+        </a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- CONTACT / LINKEDIN -->
+<section id="contact">
+  <div class="contact-bg-text">Connect</div>
+  <div class="contact-inner fade-up">
+    <div class="contact-eyebrow">Let's Connect</div>
+    <h2 class="contact-heading">Ready to<br><em>work together?</em></h2>
+    <p class="contact-sub">I'm currently open to internship opportunities and conversations about sales engineering, product, and technology. Reach out — I'd love to connect.</p>
+    <div class="contact-actions">
+      <!-- FILL IN: Replace with your actual LinkedIn URL -->
+      <a href="https://linkedin.com/in/YOUR-USERNAME" target="_blank" class="btn-linkedin">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 01-2.063-2.065 2.064 2.064 0 112.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+        View LinkedIn Profile
+      </a>
+      <!-- FILL IN: Replace with your actual email -->
+      <a href="mailto:your.email@example.com" class="btn-email">
+        <svg width="16" height="16" viewBox="0 0 16 16" fill="none"><path d="M2 4l6 5 6-5M2 4h12v9H2V4z" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Send an Email
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <a href="#hero" class="logo">Your Name</a>
+  <span class="copy">© 2025 · All rights reserved</span>
+  <a href="#hero" class="back-top">↑ Back to top</a>
+</footer>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
+    });
+  }, { threshold: 0.12 });
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.nav-links a');
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(s => { if (window.scrollY >= s.offsetTop - 100) current = s.id; });
+    navLinks.forEach(a => { a.style.color = a.getAttribute('href') === '#' + current ? 'var(--teal)' : ''; });
+  });
+</script>
+</body>
+</html>
